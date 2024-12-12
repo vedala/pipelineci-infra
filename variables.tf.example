@@ -1,0 +1,55 @@
+variable "AUTH0_AUDIENCE" {
+  type = string
+  default = "https://pipelineci.com"
+  sensitive = true
+}
+
+variable "AUTH0_ISSUER_BASE_URL" {
+  type = string
+  default = "https://pipelineci.us.auth0.com"
+  sensitive = true
+}
+
+variable "DB_URL" {
+  type = string
+  default = ""
+  sensitive = true
+}
+
+variable "NODE_ENV" {
+  type = string
+  default = "production"
+  sensitive = false
+}
+
+variable "DOMAIN_NAME" {
+  type = string
+  default = "pipelineci.com"
+  sensitive = false
+}
+
+variable "SUBDOMAIN" {
+  type = string
+  default = "api"
+  sensitive = false
+}
+
+variable "ORGANIZATIONS_TABLE_NAME" {
+  type = string
+  default = "organizations"
+  sensitive = false
+}
+
+
+variable "GITHUB_APP_IDENTIFIER" {
+  type = string
+  default = ""
+  sensitive = true
+}
+
+
+variable "GITHUB_APP_PRIVATE_KEY" {
+  type = string
+  default = ""
+  sensitive = true
+}
