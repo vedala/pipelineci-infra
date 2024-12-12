@@ -33,7 +33,7 @@ resource "aws_s3_object" "status_updater_lambda_code" {
   bucket = aws_s3_bucket.status_updater_lambda_bucket.id
   key    = "status_updater_lambda.zip"
   source = "../../pipelineci-status-updater/status_updater_lambda.zip"
-  etag   = filemd5("../../pipelineci-status-updater/status_updater_lambda.zip")
+  etag   = filemd5("../pipelineci-status-updater/status_updater_lambda.zip")
 }
 
 resource "aws_lambda_function" "status_updater_lambda" {
