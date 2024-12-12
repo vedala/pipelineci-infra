@@ -1,0 +1,11 @@
+node_modules/
+.env
+.env.local
+.env.prod
+mydb.sqlite
+
+# terraform
+.terraform
+*.tfstate
+*.tfstate.backup
+variables.tf
