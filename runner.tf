@@ -7,12 +7,12 @@
 #
 
 resource "aws_cloudwatch_log_group" "pipelineci_runner_log_group" {
-  name              = "/ecs/pipelineci-app"
+  name              = "/ecs/pipelineci-runner"
   retention_in_days = 7
 }
 
 resource "aws_ecs_task_definition" "pipelineci_runner_task_definition" {
-  family                    = "pipelineci-gh-app-task"
+  family                    = "pipelineci-runner-task"
   network_mode              = "awsvpc"
   requires_compatibilities  = ["FARGATE"]
   execution_role_arn        = aws_iam_role.ecs_execution_role.arn
@@ -23,6 +23,7 @@ resource "aws_ecs_task_definition" "pipelineci_runner_task_definition" {
     {
       name  = "pipelineci-runner-container",
       image = "888577039580.dkr.ecr.us-west-2.amazonaws.com/pipelineci-runner:latest",
+      command = ["npm", "start"],
       portMappings = [
         {
           containerPort = 4000,
@@ -31,24 +32,56 @@ resource "aws_ecs_task_definition" "pipelineci_runner_task_definition" {
       ],
       environment = [
         {
+          "name": "AUTH0_AUDIENCE",
+          "value": var.AUTH0_AUDIENCE
+        },
+        {
+          "name": "AUTH0_ISSUER_BASE_URL",
+          "value": var.AUTH0_ISSUER_BASE_URL
+        },
+        {
           "name": "NODE_ENV",
           "value": var.NODE_ENV
+        },
+        {
+          "name": "ORGANIZATIONS_TABLE_NAME",
+          "value": var.ORGANIZATIONS_TABLE_NAME
         },
         {
           "name": "GITHUB_APP_IDENTIFIER",
           "value": var.GITHUB_APP_IDENTIFIER
         },
         {
-          "name": "WEBHOOK_SECRET",
-          "value": var.WEBHOOK_SECRET
-        },
-        {
           "name": "GITHUB_APP_PRIVATE_KEY",
           "value": var.GITHUB_APP_PRIVATE_KEY
         },
         {
-          "name": "PORT",
-          "value": var.GITHUB_APP_PORT
+          "name": "DB_HOST",
+          "value": aws_db_instance.pipelineci_db.address
+        },
+        {
+          "name": "DB_USER",
+          "value": aws_db_instance.pipelineci_db.username
+        },
+        {
+          "name": "DB_PASSWORD",
+          "value": var.DB_PASSWORD
+        },
+        {
+          "name": "DB_NAME",
+          "value": aws_db_instance.pipelineci_db.db_name
+        },
+        {
+          "name": "DB_PORT",
+          "value": tostring(aws_db_instance.pipelineci_db.port)
+        },
+        {
+          "name": "RDS_CERT_BUNDLE",
+          "value": var.RDS_CERT_BUNDLE
+        },
+        {
+          "name": "WEBHOOK_SECRET",
+          "value": var.WEBHOOK_SECRET
         },
       ],
       logConfiguration = {
@@ -76,7 +109,7 @@ resource "aws_ecs_service" "pipelineci_runner_service" {
 
   network_configuration {
     subnets           = [aws_subnet.pipelineci_private_subnet_01.id, aws_subnet.pipelineci_private_subnet_02.id]
-    security_groups   = [aws_security_group.pipelineci_runner_ecs_service_sg.id]
+    security_groups   = [aws_security_group.pipelineci_ecs_runner_sg.id]
     assign_public_ip  = false
   }
 
@@ -92,9 +125,30 @@ resource "aws_ecs_service" "pipelineci_runner_service" {
   ]
 }
 
-resource "aws_security_group" "pipelineci_runner_ecs_service_sg" {
-  name        = "pipelineci-runner-ecs-service-sg"
-  description = "Security group for Github App ECS service"
+# resource "aws_security_group" "pipelineci_runner_ecs_service_sg" {
+#   name        = "pipelineci-runner-ecs-service-sg"
+#   description = "Security group for Github App ECS service"
+
+#   vpc_id = aws_vpc.pipelineci_vpc.id
+
+#   ingress {
+#     from_port   = 4000
+#     to_port     = 4000
+#     protocol    = "tcp"
+#     security_groups = [aws_security_group.pipelineci_runner_lb_sg.id]
+#   }
+
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"  # Allow all outbound traffic
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+# }
+
+resource "aws_security_group" "pipelineci_ecs_runner_sg" {
+  name        = "pipelineci-ecs-runner-sg"
+  description = "Security group for Runner"
 
   vpc_id = aws_vpc.pipelineci_vpc.id
 
@@ -209,9 +263,9 @@ resource "aws_lb_listener_certificate" "pipelineci_runner_alb_certificate" {
   certificate_arn = data.aws_acm_certificate.pipelineci_runner_certificate.arn
 }
 
-resource "aws_route53_record" "pipelineciGhappRecord" {
+resource "aws_route53_record" "pipelineciRunnerRecord" {
   zone_id = data.aws_route53_zone.pipelineciZone.zone_id
-  name          = "${var.GHAPP_SUBDOMAIN}.${var.DOMAIN_NAME}"
+  name          = "${var.RUNNER_SUBDOMAIN}.${var.DOMAIN_NAME}"
   type    = "A"
 
   alias {
