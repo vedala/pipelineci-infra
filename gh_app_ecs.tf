@@ -46,6 +46,10 @@ resource "aws_ecs_task_definition" "pipelineci_ghapp_task_definition" {
           "name": "PORT",
           "value": var.GITHUB_APP_PORT
         },
+        {
+          "name": "SNS_TOPIC_ARN",
+          "value": aws_sns_topic.pipelineci_sns_runner_topic.arn
+        },
       ],
       logConfiguration = {
         logDriver = "awslogs"
