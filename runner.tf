@@ -83,6 +83,10 @@ resource "aws_ecs_task_definition" "pipelineci_runner_task_definition" {
           "name": "WEBHOOK_SECRET",
           "value": var.WEBHOOK_SECRET
         },
+        {
+          "name": "PORT",
+          "value": var.RUNNER_PORT
+        },
       ],
       logConfiguration = {
         logDriver = "awslogs"
