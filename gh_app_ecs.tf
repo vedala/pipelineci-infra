@@ -31,6 +31,10 @@ resource "aws_ecs_task_definition" "pipelineci_ghapp_task_definition" {
           "value": var.NODE_ENV
         },
         {
+          "name": "AWS_REGION",
+          "value": var.AWS_REGION
+        },
+        {
           "name": "GITHUB_APP_IDENTIFIER",
           "value": var.GITHUB_APP_IDENTIFIER
         },
@@ -49,6 +53,42 @@ resource "aws_ecs_task_definition" "pipelineci_ghapp_task_definition" {
         {
           "name": "SNS_TOPIC_ARN",
           "value": aws_sns_topic.pipelineci_sns_runner_topic.arn
+        },
+        {
+          "name": "ORGANIZATIONS_TABLE_NAME",
+          "value": var.ORGANIZATIONS_TABLE_NAME
+        },
+        {
+          "name": "PROJECSTS_TABLE_NAME",
+          "value": var.PROJECTS_TABLE_NAME
+        },
+        {
+          "name": "RUNS_TABLE_NAME",
+          "value": var.RUNS_TABLE_NAME
+        },
+        {
+          "name": "DB_HOST",
+          "value": aws_db_instance.pipelineci_db.address
+        },
+        {
+          "name": "DB_USER",
+          "value": aws_db_instance.pipelineci_db.username
+        },
+        {
+          "name": "DB_PASSWORD",
+          "value": var.DB_PASSWORD
+        },
+        {
+          "name": "DB_NAME",
+          "value": aws_db_instance.pipelineci_db.db_name
+        },
+        {
+          "name": "DB_PORT",
+          "value": tostring(aws_db_instance.pipelineci_db.port)
+        },
+        {
+          "name": "RDS_CERT_BUNDLE",
+          "value": var.RDS_CERT_BUNDLE
         },
       ],
       logConfiguration = {
