@@ -66,6 +66,30 @@ resource "aws_ecs_task_definition" "pipelineci_ghapp_task_definition" {
           "name": "RUNS_TABLE_NAME",
           "value": var.RUNS_TABLE_NAME
         },
+        {
+          "name": "DB_HOST",
+          "value": aws_db_instance.pipelineci_db.address
+        },
+        {
+          "name": "DB_USER",
+          "value": aws_db_instance.pipelineci_db.username
+        },
+        {
+          "name": "DB_PASSWORD",
+          "value": var.DB_PASSWORD
+        },
+        {
+          "name": "DB_NAME",
+          "value": aws_db_instance.pipelineci_db.db_name
+        },
+        {
+          "name": "DB_PORT",
+          "value": tostring(aws_db_instance.pipelineci_db.port)
+        },
+        {
+          "name": "RDS_CERT_BUNDLE",
+          "value": var.RDS_CERT_BUNDLE
+        },
       ],
       logConfiguration = {
         logDriver = "awslogs"
