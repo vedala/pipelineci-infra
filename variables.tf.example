@@ -10,15 +10,15 @@ variable "AUTH0_ISSUER_BASE_URL" {
   sensitive = false
 }
 
-variable "DB_URL" {
-  type = string
-  default = ""
-  sensitive = true
-}
-
 variable "NODE_ENV" {
   type = string
   default = "production"
+  sensitive = false
+}
+
+variable "AWS_REGION" {
+  type = string
+  default = "us-west-2"
   sensitive = false
 }
 
@@ -37,6 +37,18 @@ variable "SUBDOMAIN" {
 variable "ORGANIZATIONS_TABLE_NAME" {
   type = string
   default = "organizations"
+  sensitive = false
+}
+
+variable "PROJECTS_TABLE_NAME" {
+  type = string
+  default = "projects"
+  sensitive = false
+}
+
+variable "RUNS_TABLE_NAME" {
+  type = string
+  default = "runs"
   sensitive = false
 }
 
@@ -76,7 +88,37 @@ variable "GITHUB_APP_PORT" {
   sensitive = false
 }
 
+variable "RUNNER_PORT" {
+  type = string
+  default = "4000"
+  sensitive = false
+}
+
+variable "SELF_IP_FOR_BASTION" {
+  type = string
+  default = ""
+  sensitive = true
+}
+
+variable "BASTION_KEY_PAIR_NAME" {
+  type = string
+  default = "BastionKeyPair"
+  sensitive = false
+}
+
+variable "BASTION_SPOT_PRICE" {
+  type = string
+  default = "0.005"
+  sensitive = false
+}
+
 variable "GITHUB_APP_PRIVATE_KEY" {
+  type = string
+  default = ""
+  sensitive = true
+}
+
+variable "RDS_CERT_BUNDLE" {
   type = string
   default = ""
   sensitive = true
