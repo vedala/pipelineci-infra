@@ -16,6 +16,12 @@ variable "NODE_ENV" {
   sensitive = false
 }
 
+variable "AWS_REGION" {
+  type = string
+  default = "us-west-2"
+  sensitive = false
+}
+
 variable "DOMAIN_NAME" {
   type = string
   default = "pipelineci.com"
