@@ -40,6 +40,18 @@ variable "ORGANIZATIONS_TABLE_NAME" {
   sensitive = false
 }
 
+variable "PROJECTS_TABLE_NAME" {
+  type = string
+  default = "projects"
+  sensitive = false
+}
+
+variable "RUNS_TABLE_NAME" {
+  type = string
+  default = "runs"
+  sensitive = false
+}
+
 variable "GITHUB_APP_IDENTIFIER" {
   type = string
   default = ""
