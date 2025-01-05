@@ -81,3 +81,9 @@ variable "GITHUB_APP_PRIVATE_KEY" {
   default = ""
   sensitive = true
 }
+
+variable "RDS_CERT_BUNDLE" {
+  type = string
+  default = ""
+  sensitive = true
+}
