@@ -51,7 +51,7 @@ resource "aws_eip" "pipelineci_bastion_eip" {
 }
 
 resource "aws_eip_association" "pipelineci_bastion_eip_association" {
-  instance_id   = aws_instance.pipelineci_bastion.id
+  instance_id   = aws_spot_instance_request.pipelineci_bastion.spot_instance_id
   allocation_id = aws_eip.pipelineci_bastion_eip.id
 }
 
