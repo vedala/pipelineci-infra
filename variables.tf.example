@@ -76,6 +76,12 @@ variable "GITHUB_APP_PORT" {
   sensitive = false
 }
 
+variable "RUNNER_PORT" {
+  type = string
+  default = "4000"
+  sensitive = false
+}
+
 variable "GITHUB_APP_PRIVATE_KEY" {
   type = string
   default = ""
