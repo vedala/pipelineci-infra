@@ -82,6 +82,24 @@ variable "RUNNER_PORT" {
   sensitive = false
 }
 
+variable "SELF_IP_FOR_BASTION" {
+  type = string
+  default = ""
+  sensitive = true
+}
+
+variable "BASTION_KEY_PAIR_NAME" {
+  type = string
+  default = "BastionKeyPair"
+  sensitive = false
+}
+
+variable "BASTION_SPOT_PRICE" {
+  type = string
+  default = "0.005"
+  sensitive = false
+}
+
 variable "GITHUB_APP_PRIVATE_KEY" {
   type = string
   default = ""
