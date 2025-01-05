@@ -10,12 +10,6 @@ variable "AUTH0_ISSUER_BASE_URL" {
   sensitive = false
 }
 
-variable "DB_URL" {
-  type = string
-  default = ""
-  sensitive = true
-}
-
 variable "NODE_ENV" {
   type = string
   default = "production"
