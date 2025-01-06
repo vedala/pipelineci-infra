@@ -59,7 +59,7 @@ resource "aws_ecs_task_definition" "pipelineci_ghapp_task_definition" {
           "value": var.ORGANIZATIONS_TABLE_NAME
         },
         {
-          "name": "PROJECSTS_TABLE_NAME",
+          "name": "PROJECTS_TABLE_NAME",
           "value": var.PROJECTS_TABLE_NAME
         },
         {
