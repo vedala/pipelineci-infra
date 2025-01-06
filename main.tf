@@ -392,6 +392,7 @@ resource "aws_security_group" "pipelineci_rds_sg" {
       aws_security_group.pipelineci_ecs_service_sg.id,
       aws_security_group.pipelineci_ecs_migrations_sg.id,
       aws_security_group.pipelineci_bastion_sg.id,
+      aws_security_group.pipelineci_ghapp_ecs_service_sg.id,
     ]
   }
 
