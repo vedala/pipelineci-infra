@@ -25,5 +25,5 @@ resource "aws_iam_policy" "pipelineci_sns_policy" {
 
 resource "aws_iam_role_policy_attachment" "sns_role_attachment" {
   policy_arn  = aws_iam_policy.pipelineci_sns_policy.arn
-  role        = aws_iam_role.ecs_execution_role.name
+  role        = aws_iam_role.ecs_task_role.name
 }
