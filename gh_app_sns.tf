@@ -16,10 +16,7 @@ resource "aws_iam_policy" "pipelineci_sns_policy" {
     Statement = [
       {
         Effect = "Allow",
-        Action = [
-          "sns:Publish",
-          "sns:ListTopics"
-        ],
+        Action = "sns:*",
         Resource: aws_sns_topic.pipelineci_sns_runner_topic.arn
       }
     ]
