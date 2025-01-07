@@ -17,7 +17,7 @@ resource "aws_iam_policy" "pipelineci_sns_policy" {
       {
         Effect = "Allow",
         Action = "sns:*",
-        Resource: aws_sns_topic.pipelineci_sns_runner_topic.arn
+        Resource: "*"
       }
     ]
   })
