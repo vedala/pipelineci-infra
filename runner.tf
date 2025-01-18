@@ -56,6 +56,10 @@ resource "aws_ecs_task_definition" "pipelineci_runner_task_definition" {
           "value": var.GITHUB_APP_PRIVATE_KEY
         },
         {
+          "name": "RUNS_TABLE_NAME",
+          "value": var.RUNS_TABLE_NAME
+        },
+        {
           "name": "DB_HOST",
           "value": aws_db_instance.pipelineci_db.address
         },
