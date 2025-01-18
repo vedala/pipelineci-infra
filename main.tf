@@ -540,6 +540,14 @@ resource "aws_ecs_task_definition" "pipelineci_task_definition" {
           "value": var.ORGANIZATIONS_TABLE_NAME
         },
         {
+          "name": "PROJECTS_TABLE_NAME",
+          "value": var.PROJECTS_TABLE_NAME
+        },
+        {
+          "name": "RUNS_TABLE_NAME",
+          "value": var.RUNS_TABLE_NAME
+        },
+        {
           "name": "GITHUB_APP_IDENTIFIER",
           "value": var.GITHUB_APP_IDENTIFIER
         },
